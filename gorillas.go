@@ -74,6 +74,15 @@ func (hub Gorillas) GetSubscribedConnections(topic Topic) []Connection {
 	return connectionsMapToSlice(connectionsMap)
 }
 
+// SendJSON allow send JSON to all connections subscribed to the topic
+func (hub Gorillas) SendJSON(topic Topic, json interface{}) {
+	subscribers := hub.GetSubscribedConnections(topic)
+	for _, subscriber := range subscribers {
+		connection := (*websocket.Conn)(subscriber)
+		connection.WriteJSON(json)
+	}
+}
+
 func connectionsMapToSlice(connectionsMap connectionsMap) []Connection {
 	connections := make([]Connection, 0, len(connectionsMap))
 	for k := range connectionsMap {
