@@ -3,8 +3,17 @@ package gorillas
 import (
 	"testing"
 
-	"github.com/gorilla/websocket"
+	"github.com/golang/mock/gomock"
+	"github.com/sociafill/gorillas/mocks"
 )
+
+type DummyConnection struct {
+	messages []interface{}
+}
+
+func (connection DummyConnection) WriteJSON(v interface{}) error {
+	return nil
+}
 
 func TestConstructor(t *testing.T) {
 	NewGorillas()
@@ -12,17 +21,21 @@ func TestConstructor(t *testing.T) {
 
 func TestAddConnectionSuccessfully(t *testing.T) {
 	gorillas := NewGorillas()
-	connection := websocket.Conn{}
-	gorillas.AddConnection(&connection)
+	// var connection ConnectionInterface
+	connection := &DummyConnection{}
+
+	gorillas.AddConnection(connection)
 }
 
 func TestMessagesDeliveryToSubscribers(t *testing.T) {
-
+	mockCtrl := gomock.NewController(t)
+	defer mockCtrl.Finish()
+	mockConnection := mocks.NewMockConnectionInterface(mockCtrl)
+	testGorillas := NewGorillas()
+	testGorillas.AddConnection(mockConnection)
 	topic := Topic("test-topic")
-	gorillas := NewGorillas()
-	connection := websocket.Conn{}
-	gorillas.AddConnection(&connection)
-	gorillas.Subscribe(&connection, topic)
+	testGorillas.Subscribe(mockConnection, topic)
 	data := "Hello, world"
-	gorillas.SendJSON(topic, data)
+	mockConnection.EXPECT().WriteJSON(data).Return(nil).Times(1)
+	testGorillas.SendJSON(topic, data)
 }
