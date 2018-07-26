@@ -15,3 +15,14 @@ func TestAddConnectionSuccessfully(t *testing.T) {
 	connection := websocket.Conn{}
 	gorillas.AddConnection(&connection)
 }
+
+func TestMessagesDeliveryToSubscribers(t *testing.T) {
+
+	topic := Topic("test-topic")
+	gorillas := NewGorillas()
+	connection := websocket.Conn{}
+	gorillas.AddConnection(&connection)
+	gorillas.Subscribe(&connection, topic)
+	data := "Hello, world"
+	gorillas.SendJSON(topic, data)
+}

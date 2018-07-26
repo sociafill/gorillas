@@ -1,7 +1,7 @@
 # Gorillas
 
-[![Build Status](https://travis-ci.org/sociafill/gorillas.svg?branch=dev)](https://travis-ci.org/sociafill/gorillas) 
-[![Coverage Status](https://coveralls.io/repos/github/sociafill/gorillas/badge.svg?branch=dev)](https://coveralls.io/github/sociafill/gorillas?branch=dev)
+[![Build Status](https://travis-ci.org/sociafill/gorillas.svg?branch=master)](https://travis-ci.org/sociafill/gorillas) 
+[![Coverage Status](https://coveralls.io/repos/github/sociafill/gorillas/badge.svg?branch=master)](https://coveralls.io/github/sociafill/gorillas?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sociafill/gorillas)](https://goreportcard.com/badge/github.com/sociafill/gorillas)
 [![Documentation](https://godoc.org/github.com/sociafill/gorillas?status.svg)](http://godoc.org/github.com/sociafill/gorillas)
 
