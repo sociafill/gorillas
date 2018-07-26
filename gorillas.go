@@ -14,7 +14,7 @@ type ConnectionInterface interface {
 // Topic is an usual topic from messaging systems vocabulary
 type Topic string
 
-type connectionsMap map[(ConnectionInterface)]bool
+type connectionsMap map[ConnectionInterface]bool
 
 // Gorillas is main structure for the connections management
 type Gorillas struct {
@@ -31,7 +31,7 @@ func NewGorillas() Gorillas {
 }
 
 // GetAllConnections returns all registered connections from Gorillas hub
-func (hub Gorillas) GetAllConnections() [](ConnectionInterface) {
+func (hub Gorillas) GetAllConnections() []ConnectionInterface {
 	return connectionsMapToSlice(hub.connectionsMap)
 }
 
@@ -67,7 +67,7 @@ func (hub Gorillas) Unsubscribe(connection ConnectionInterface, topic Topic) {
 }
 
 // GetSubscribedConnections returns all connections which are subscribed to the topic
-func (hub Gorillas) GetSubscribedConnections(topic Topic) [](ConnectionInterface) {
+func (hub Gorillas) GetSubscribedConnections(topic Topic) []ConnectionInterface {
 	connectionsMap, topicExists := hub.subscriptionsMap[topic]
 	if !topicExists {
 		// @TODO Add adequate handling for case when nobody is subscribed to topic
